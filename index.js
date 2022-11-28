@@ -34,3 +34,23 @@ const addUser = () =>{
 // dicpatch action
 // reducer
 // store
+
+// create a reducer for counter
+const reduceCounter = ({state: initialCounterState, action}) =>{
+    switch (action.type) {
+        case INCREMENT:
+            
+            return{
+                ...state,
+                count: state.count + 1,
+            };
+        case DECCREMENT:
+            return{
+                ...state,
+                count: state.count - 1,
+            }
+    
+        default:
+            count;
+    }
+}
