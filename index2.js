@@ -8,13 +8,14 @@ const { createStore } = require("redux");
 // NAMING CONSTANT
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
+const INCREMENT_BY_VALUE = 'INCREMENT_BY_VALUE';
 const RESET = 'RESET';
 
 // decalare a state
 const initialCount = {
     count: 0
 }
-// action for increment
+// action declare
 const incrementCount = () =>{
     return{
         type: INCREMENT
@@ -23,6 +24,12 @@ const incrementCount = () =>{
 const decrementCount = () =>{
     return{
         type: DECREMENT
+    }
+}
+const incrementByValue = (value) =>{
+    return{
+        type: INCREMENT_BY_VALUE,
+        payload: value,
     }
 }
 const resetCount = () =>{
@@ -44,6 +51,11 @@ const counterReducer = (state=initialCount, action) =>{
                 ...state,
                 count: state.count - 1
             }
+        case INCREMENT_BY_VALUE:
+            return{
+                ...state,
+                count: state.count + action.payload
+            }
         case RESET:
             return{
                 ...state,
@@ -60,8 +72,10 @@ const store = createStore(counterReducer);
 store.subscribe( () =>{
     console.log(store.getState());
 })
-store.dispatch(incrementCount());
-store.dispatch(incrementCount());
-store.dispatch(resetCount())
-store.dispatch(incrementCount());
-store.dispatch(decrementCount())
+// store.dispatch(incrementCount());
+// store.dispatch(incrementCount());
+// store.dispatch(resetCount())
+// store.dispatch(incrementCount());
+// store.dispatch(decrementCount())
+store.dispatch(incrementByValue(5))
+store.dispatch(incrementByValue(10))
