@@ -10,6 +10,8 @@ const { default: logger } = require("redux-logger");
 // NAMING CONSTAT
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const ADD_PRODUCT = 'ADD_PRODUCT';
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+
 
 // initial product state
 const initialProductState ={
@@ -29,6 +31,12 @@ const addProduct = (product) =>{
         payload: product,
     }
 }
+const removeProduct = (product) =>{
+    return{
+        type: REMOVE_PRODUCT,
+        payload: product,
+    }
+}
 
 // porduct reducer
 const productReducer = (state= initialProductState, action) =>{
@@ -42,16 +50,22 @@ const productReducer = (state= initialProductState, action) =>{
            products: [...state.products, action.payload],
            numberOfProducts: state.numberOfProducts + 1
          }
+        case REMOVE_PRODUCT:
+         return{
+           products: [...state.products.filter(product => product !== action.payload)],
+           numberOfProducts: state.numberOfProducts - 1
+         }
     
         default:
             return state;
     }
 }
 // store
-const store = createStore(productReducer, applyMiddleware(logger))
+const store = createStore(productReducer)
 store.subscribe(() =>{
     console.log(store.getState());
 }
 )
 store.dispatch(getProducts())
-store.dispatch(addProduct('sunglass'))
+store.dispatch(addProduct('heroku'))
+store.dispatch(removeProduct('heroku'))
